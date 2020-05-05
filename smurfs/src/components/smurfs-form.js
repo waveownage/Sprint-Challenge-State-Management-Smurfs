@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import React, {useState} from "react";
 import { connect } from "react-redux";
 import { getSmurf } from "../actions/index";
 
@@ -20,7 +20,7 @@ const SmurfForm = (props) => {
     const submitHandler = e => {
         e.preventDefault();
 
-        props.getSmurf(formState);
+        props.getSmurf(formState.smurf);
         
         setFormState({
             name: "",
@@ -46,7 +46,7 @@ const SmurfForm = (props) => {
             <input name="id" placeholder="id"
             value={formState.id} onChange={changeHandler}/>
 
-            <button type="submit" onClick={props.postApi}>Click here for post</button>
+            <button type="submit" onClick={props.getSmurf}>Click here for post</button>
         </form>
     );
 }
