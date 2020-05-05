@@ -5,25 +5,25 @@ import {
   } from "../actions/index";
   
   const initialState = {
-    smurf: {"name":"Brainey","age":200,"height":"5cm","id":0},
+    smurf: [],
     isFetching: false,
     error: ""
   };
   
   export const reducer = (state = initialState, action) => {
     switch (action.type) {
-      case FETCHING_QUOTE_START:
+      case FETCHING_SMURF_START:
         return {
           ...state,
           isFetching: true
         };
-      case FETCHING_QUOTE_SUCCESS:
+      case FETCHING_SMURF_SUCCESS:
         return {
           ...state,
           isFetching: false,
-          quote: action.payload
+          smurf: action.payload
         };
-      case FETCHING_QUOTE_FAILURE:
+      case FETCHING_SMURF_FAILURE:
         return {
           ...state,
           isFetching: false,

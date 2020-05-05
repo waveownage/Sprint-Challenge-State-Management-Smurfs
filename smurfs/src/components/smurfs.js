@@ -1,37 +1,46 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSmurf } from "../actions";
+import { getSmurf } from "../actions/index";
 
-const Quotes = ({ getSmurf, smurf, isFetching, error }) => {
-  if (error !== "")
+const SmurfForm = (props) => {
+    const [formState, setFormState] = useState({
+        name: "",
+        age: "",
+        height: ""
+        id: "",
+    });
+
+    const submitHandler = e => {
+        e.preventDefault();
+        props.getSmurf(formState);
+        
+        setFormState({
+            name: "",
+            age: "",
+            height: "",
+            id: "",
+        });
+    }
+
     return (
-      <div>
-        <h2>{error}</h2>
-        <button onClick={getSmurf}>Load New Smurf</button>
-      </div>
+        <form onSubmit={submitHandler}>
+            <h1>The Smurf Crew</h1>
+
+            <input name="name" placeholder="name" 
+            value={formState.name} onChange={changeHandler}/>
+
+            <input name="age" placeholder="age" type="number"
+            value={formState.age} onChange={changeHandler}/>
+
+            <input name="height" placeholder="height" 
+            value={formState.height} onChange={changeHandler}/>
+
+            <input name="id" placeholder="id"
+            value={formState.id} onChange={changeHandler}/>
+
+            <button type="submit" onClick={props.postApi}>Click here for post</button>
+        </form>
     );
+}
 
-  if (isFetching) {
-    return <h2>Fetching a quote now :)</h2>;
-  } else {
-    return (
-      <div>
-        <h2>Cat Fact: {quote}</h2>
-        <button onClick={getSmurf}>Load New Cat Fact</button>
-      </div>
-    );
-  }
-};
-
-const mapStateToProps = state => {
-  return {
-    quote: state.quote,
-    isFetching: state.isFetching,
-    error: state.error
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { getSmurf }
-)(Smurfs);
+export default connect(null, { getSmurf: getSmurf })(SmurfForm);
