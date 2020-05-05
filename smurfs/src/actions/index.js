@@ -12,7 +12,7 @@ export const getSmurf = () => dispatch => {
     .then(res => {
       console.log(res.data);
 
-      dispatch({ type: FETCHING_SMURF_SUCCESS, payload: res.data });
+      dispatch({ type: FETCHING_SMURF_SUCCESS, payload: res.data[res.data.length -1] });
     })
     .catch(err => {
       console.log(err);

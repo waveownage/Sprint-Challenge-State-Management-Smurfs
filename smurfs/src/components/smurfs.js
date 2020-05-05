@@ -1,46 +1,40 @@
-import React from "react";
-import { connect } from "react-redux";
-import { getSmurf } from "../actions/index";
+import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
+import axios from 'axios';
 
-const SmurfForm = (props) => {
-    const [formState, setFormState] = useState({
-        name: "",
-        age: "",
-        height: ""
-        id: "",
-    });
+const List = (props) => {
+    const [smurfList, setSmurfList] = useState([]);
 
-    const submitHandler = e => {
-        e.preventDefault();
-        props.getSmurf(formState);
-        
-        setFormState({
-            name: "",
-            age: "",
-            height: "",
-            id: "",
-        });
-    }
+    useEffect(() => {
+        axios.get("http://localhost:3333/smurfs")
+            .then(res => {
+                    console.log("res", res.data);
+                    setSmurfList(res.data)
+            })
+            .catch(err => console.log("Error", err))
+    }, [props.initialState])
 
     return (
-        <form onSubmit={submitHandler}>
-            <h1>The Smurf Crew</h1>
-
-            <input name="name" placeholder="name" 
-            value={formState.name} onChange={changeHandler}/>
-
-            <input name="age" placeholder="age" type="number"
-            value={formState.age} onChange={changeHandler}/>
-
-            <input name="height" placeholder="height" 
-            value={formState.height} onChange={changeHandler}/>
-
-            <input name="id" placeholder="id"
-            value={formState.id} onChange={changeHandler}/>
-
-            <button type="submit" onClick={props.postApi}>Click here for post</button>
-        </form>
-    );
+        <>
+            <h3>The Smurf Crew</h3>
+            {smurfList.map((item) => {
+                return (
+                    <>
+                        <br/>
+                            <p>{item.name}</p>
+                            <p>age: {item.age}</p>
+                            <p>height: {item.height}</p>
+                            <p>id: {item.id}</p>
+                        <br/>
+                    </>
+                )
+            })}
+        </>
+    )
 }
 
-export default connect(null, { getSmurf: getSmurf })(SmurfForm);
+export default connect((state) =>{
+    return {
+        initialState: state
+    }
+})(List);
