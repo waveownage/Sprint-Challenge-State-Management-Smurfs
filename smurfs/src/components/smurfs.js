@@ -16,7 +16,6 @@ const List = (props) => {
 
     return (
         <>
-            <h3>The Smurf Crew</h3>
             {smurfList.map((item) => {
                 return (
                     <>
